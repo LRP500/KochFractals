@@ -85,6 +85,13 @@ namespace KochFractals
         [SerializeField]
         private AnimationCurve _generator = null;
 
+        [SerializeField]
+        protected bool _useBezierCurves = false;
+
+        [Range(4, 32)]
+        [SerializeField]
+        protected int _bezierVertexCount = 0;
+
         #endregion Serialized Fields
 
         #region Private Fields
@@ -94,6 +101,7 @@ namespace KochFractals
 
         protected Vector3[] _currentPositions = null;
         protected Vector3[] _targetPositions = null;
+        protected Vector3[] _bezierPositions = null;
 
         private List<LineSegment> _lineSegments = null;
         private Keyframe[] _keys = null;
@@ -176,7 +184,7 @@ namespace KochFractals
                 targetPos.Add(currentSegment.start);
 
                 /// Resolve new segment positions with animation curve.
-                for (int j = 0, keyCount = _keys.Length - 1; j < keyCount; j++)
+                for (int j = 1, keyCount = _keys.Length - 1; j < keyCount; j++)
                 {
                     Keyframe currentKey = _keys[j];
 
@@ -200,9 +208,31 @@ namespace KochFractals
             _targetPositions = new Vector3[targetPos.Count];
             _currentPositions = newPos.ToArray();
             _targetPositions = targetPos.ToArray();
+            _bezierPositions = BezierCurve(_targetPositions, _bezierVertexCount);
 
             /// Increment steps
             _generationSteps++;
+        }
+
+        protected Vector3[] BezierCurve(Vector3[] positions, int vertexCount)
+        {
+            List<Vector3> resultingPoints = new List<Vector3>();
+
+            for (int i = 0, length = positions.Length; i < length; i += 2)
+            {
+                if (i + 2 <= positions.Length - 1)
+                {
+                    for (float ratio = 0f; ratio <= 1f; ratio += 1.0f / vertexCount)
+                    {
+                        Vector3 tangentLineVertex1 = Vector3.Lerp(positions[i], positions[i + 1], ratio);
+                        Vector3 tangentLineVertex2 = Vector3.Lerp(positions[i + 1], positions[i + 2], ratio);
+                        Vector3 bezierPoint = Vector3.Lerp(tangentLineVertex1, tangentLineVertex2, ratio);
+                        resultingPoints.Add(bezierPoint);
+                    }
+                }
+            }
+
+            return resultingPoints.ToArray();
         }
 
         #endregion Private Methods

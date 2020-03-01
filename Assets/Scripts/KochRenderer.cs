@@ -43,7 +43,18 @@ namespace KochFractals
                     _lerpedPositions[i] = Vector3.Lerp(_currentPositions[i], _targetPositions[i], _lerpAmount);
                 }
 
-                _lineRenderer.SetPositions(_lerpedPositions);
+                /// Bezier curves
+                if (_useBezierCurves)
+                {
+                    _bezierPositions = BezierCurve(_lerpedPositions, _bezierVertexCount);
+                    _lineRenderer.positionCount = _bezierPositions.Length;
+                    _lineRenderer.SetPositions(_bezierPositions);
+                }
+                else
+                {
+                    _lineRenderer.positionCount = _lerpedPositions.Length;
+                    _lineRenderer.SetPositions(_lerpedPositions);
+                }
             }
 
             ProcessInput();

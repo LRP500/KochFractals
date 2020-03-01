@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _axis: 2
-  _initiatorType: 3
+  _initiatorType: 5
   _initiatorSize: 1
   _generator:
     serializedVersion: 2
@@ -195,7 +195,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _useBezierCurves: 1
+  _bezierVertexCount: 8
   _lerpAmount: 0
-  _generationSizeMultiplier: 1
+  _generationSizeMultiplier: 2
   _generateInwards: 105
   _generateOutwards: 111
