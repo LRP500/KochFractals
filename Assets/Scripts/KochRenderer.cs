@@ -31,6 +31,7 @@ namespace KochFractals
             _lineRenderer.useWorldSpace = false;
             _lineRenderer.positionCount = _currentPositions.Length;
             _lineRenderer.SetPositions(_currentPositions);
+            _lerpedPositions = new Vector3[_currentPositions.Length];
         }
 
         private void Update()
@@ -56,31 +57,6 @@ namespace KochFractals
                     _lineRenderer.SetPositions(_lerpedPositions);
                 }
             }
-
-            ProcessInput();
-        }
-
-        private void ProcessInput()
-        {
-            if (Input.GetKeyDown(_generateInwards))
-            {
-                Generate(_targetPositions, false, _generationSizeMultiplier);
-                UpdateRenderer();
-            }
-
-            if (Input.GetKeyDown(_generateOutwards))
-            {
-                Generate(_targetPositions, true, _generationSizeMultiplier);
-                UpdateRenderer();
-            }
-        }
-
-        private void UpdateRenderer()
-        {
-            _lerpedPositions = new Vector3[_currentPositions.Length];
-            _lineRenderer.positionCount = _currentPositions.Length;
-            _lineRenderer.SetPositions(_currentPositions);
-            _lerpAmount = 0;
         }
     }
 }

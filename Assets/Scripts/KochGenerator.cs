@@ -51,6 +51,13 @@ namespace KochFractals
             public float length;
         }
 
+        [System.Serializable]
+        public struct StartGen
+        {
+            public bool outwards;
+            public float scale;
+        }
+
         private Dictionary<Axis, Rotation> _rotations = new Dictionary<Axis, Rotation>()
         {
             { Axis.X, new Rotation(new Vector3(1, 0, 0), new Vector3(0, 0, 1)) },
@@ -81,6 +88,9 @@ namespace KochFractals
 
         [SerializeField]
         private float _initiatorSize = 1f;
+
+        [SerializeField]
+        private StartGen[] _startGen = null;
 
         [SerializeField]
         private AnimationCurve _generator = null;
@@ -115,8 +125,8 @@ namespace KochFractals
         private void Awake()
         {
             InitializeGenerator();
-            InitializePositions();
             InitializeSegments();
+            InitializePositions();
         }
 
         #endregion MonoBehaviour
@@ -154,6 +164,12 @@ namespace KochFractals
             /// Resolve last edge
             _currentPositions[_initiator.edgeCount] = _currentPositions[0];
             _targetPositions = _currentPositions;
+
+            /// Start generation
+            foreach (StartGen gen in _startGen)
+            {
+                Generate(_targetPositions, gen.outwards, gen.scale);
+            }
         }
 
         protected void Generate(Vector3[] positions, bool outwards, float sizeMultiplier)
