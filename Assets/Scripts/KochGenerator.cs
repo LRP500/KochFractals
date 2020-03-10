@@ -7,9 +7,14 @@ namespace KochFractals
     {
         #region Data Structures
 
-        protected enum Axis { X, Y, Z }
+        protected enum Axis
+        {
+            XAxis,
+            YAxis,
+            ZAxis
+        }
 
-        protected enum Initiator
+        protected enum InitiatorMode
         {
             Triangle,
             Square,
@@ -31,7 +36,7 @@ namespace KochFractals
             }
         }
 
-        private struct InitiatorInfo
+        protected struct InitiatorInfo
         {
             public int edgeCount;
             public float initialRotation;
@@ -60,20 +65,20 @@ namespace KochFractals
 
         private Dictionary<Axis, Rotation> _rotations = new Dictionary<Axis, Rotation>()
         {
-            { Axis.X, new Rotation(new Vector3(1, 0, 0), new Vector3(0, 0, 1)) },
-            { Axis.Y, new Rotation(new Vector3(0, 1, 0), new Vector3(1, 0, 0)) },
-            { Axis.Z, new Rotation(new Vector3(0, 0, 1), new Vector3(0, 1, 0)) }
+            { Axis.XAxis, new Rotation(new Vector3(1, 0, 0), new Vector3(0, 0, 1)) },
+            { Axis.YAxis, new Rotation(new Vector3(0, 1, 0), new Vector3(1, 0, 0)) },
+            { Axis.ZAxis, new Rotation(new Vector3(0, 0, 1), new Vector3(0, 1, 0)) }
         };
 
 
-        private static Dictionary<Initiator, InitiatorInfo> _initiators = new Dictionary<Initiator, InitiatorInfo>()
+        private static Dictionary<InitiatorMode, InitiatorInfo> _initiators = new Dictionary<InitiatorMode, InitiatorInfo>()
         {
-            { Initiator.Triangle, new InitiatorInfo(3, 0f) },
-            { Initiator.Square, new InitiatorInfo(4, 45f) },
-            { Initiator.Pentagon, new InitiatorInfo(5, 36f) },
-            { Initiator.Hexagon, new InitiatorInfo(6, 30f) },
-            { Initiator.Heptagon, new InitiatorInfo(7, 25.71428f) },
-            { Initiator.Octagon, new InitiatorInfo(8, 22.5f) }
+            { InitiatorMode.Triangle, new InitiatorInfo(3, 0f) },
+            { InitiatorMode.Square, new InitiatorInfo(4, 45f) },
+            { InitiatorMode.Pentagon, new InitiatorInfo(5, 36f) },
+            { InitiatorMode.Hexagon, new InitiatorInfo(6, 30f) },
+            { InitiatorMode.Heptagon, new InitiatorInfo(7, 25.71428f) },
+            { InitiatorMode.Octagon, new InitiatorInfo(8, 22.5f) }
         };
 
         #endregion Data Structures
@@ -81,32 +86,38 @@ namespace KochFractals
         #region Serialized Fields
 
         [SerializeField]
-        private Axis _axis = Axis.Z;
+        private Axis _axis = Axis.ZAxis;
 
         [SerializeField]
-        private Initiator _initiatorType = Initiator.Triangle;
+        private InitiatorMode _initiatorType = InitiatorMode.Triangle;
 
         [SerializeField]
         private float _initiatorSize = 1f;
 
         [SerializeField]
-        private StartGen[] _startGen = null;
-
-        [SerializeField]
         private AnimationCurve _generator = null;
 
+        [SerializeField]
+        private StartGen[] _startGen = null;
+
+        [Header("Bezier Curves")]
         [SerializeField]
         protected bool _useBezierCurves = false;
 
         [Range(4, 32)]
         [SerializeField]
-        protected int _bezierVertexCount = 0;
+        protected int _bezierVertexCount = 8;
+
+        [Header("Utility")]
+        [SerializeField]
+        private float _sideLength = 0f;
 
         #endregion Serialized Fields
 
         #region Private Fields
 
         private InitiatorInfo _initiator = default;
+
         private Rotation _rotation = default;
 
         protected Vector3[] _currentPositions = null;
@@ -120,6 +131,12 @@ namespace KochFractals
 
         #endregion Private Fields
 
+        #region Properties
+
+        protected InitiatorInfo Initiator => _initiators[_initiatorType];
+
+        #endregion
+
         #region MonoBehaviour
 
         private void Awake()
@@ -130,6 +147,9 @@ namespace KochFractals
         }
 
         #endregion MonoBehaviour
+
+        #region Public Methods
+        #endregion Public Methods
 
         #region Private Methods
 
@@ -281,6 +301,8 @@ namespace KochFractals
                 Vector3 end = (i < initiator.edgeCount - 1) ? edges[i + 1] : edges[0];
                 Gizmos.DrawLine(edges[i], end);
             }
+
+            _sideLength = Vector3.Distance(edges[0], edges[1]) * 0.5f;
         }
 
         #endregion Editor
