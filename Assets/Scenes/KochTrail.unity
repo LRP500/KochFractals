@@ -121,7 +121,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &406702013
+--- !u!1 &1005315284
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,30 +129,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 406702016}
-  - component: {fileID: 406702015}
+  - component: {fileID: 1005315287}
+  - component: {fileID: 1005315286}
+  - component: {fileID: 1005315285}
   m_Layer: 0
-  m_Name: KochTrail (1)
+  m_Name: KochTrail (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &406702015
+  m_IsActive: 0
+--- !u!114 &1005315285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 406702013}
+  m_GameObject: {fileID: 1005315284}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3812fa4344feaa419117ea9b06cdb3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioPeer: {fileID: 1765321678}
+  _rotationAmplitude: {x: 0, y: 10, z: 0}
+  _rotationSpeed: 10
+--- !u!114 &1005315286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005315284}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fb26cba75fb661438cb4b24138da275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _axis: 2
-  _initiatorType: 0
-  _initiatorSize: 10
+  _initiatorType: 1
+  _initiatorSize: 4
   _generator:
     serializedVersion: 2
     m_Curve:
@@ -205,13 +221,13 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _startGen:
-  - outwards: 1
-    scale: 2
   - outwards: 0
     scale: 1
-  _useBezierCurves: 0
+  - outwards: 0
+    scale: 1
+  _useBezierCurves: 1
   _bezierVertexCount: 16
-  _sideLength: 8.6602545
+  _sideLength: 2.8284268
   _trailPrefab: {fileID: 6503843389223686232, guid: a9d39844543f92a4f837e3d5390b1b35,
     type: 3}
   _trailWidthCurve:
@@ -225,7 +241,7 @@ MonoBehaviour:
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
@@ -233,7 +249,7 @@ MonoBehaviour:
       outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -270,15 +286,18 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   _audioPeer: {fileID: 1765321678}
-  _audioBands: 
-  _speedRange: {x: 0, y: 50}
---- !u!4 &406702016
+  _audioBands: 0000000001000000020000000300000004000000050000000600000007000000
+  _speedMinMax: {x: 0, y: 50}
+  _widthMinMax: {x: 0.1, y: 0.3}
+  _trailTimeMinMax: {x: 0, y: 0.5}
+  _colorMultiplier: 2
+--- !u!4 &1005315287
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 406702013}
+  m_GameObject: {fileID: 1005315284}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -363,7 +382,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1460222186}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 28, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -462,11 +481,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioProfile: 1
   _channel: 0
-  _audioClip: {fileID: 8300000, guid: 6669bc853753c0f4183c06301dae4a25, type: 3}
+  _audioClip: {fileID: 8300000, guid: 4f6d5bc9039a8de4ab01c656b876b6d2, type: 3}
   _useMicrophone: 0
   _inputDevice: 
-  _microphoneGroup: {fileID: 0}
-  _masterGroup: {fileID: 0}
+  _microphoneGroup: {fileID: 4794909345891452666, guid: 7f209f6338e1168458668affce4c0006,
+    type: 2}
+  _masterGroup: {fileID: 24300002, guid: 7f209f6338e1168458668affce4c0006, type: 2}
 --- !u!82 &1765321679
 AudioSource:
   m_ObjectHideFlags: 0
@@ -563,20 +583,53 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &779692747351504385
+--- !u!1 &1807435372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1807435375}
+  - component: {fileID: 1807435374}
+  - component: {fileID: 1807435373}
+  m_Layer: 0
+  m_Name: KochTrail (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1807435373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1747478106}
+  m_GameObject: {fileID: 1807435372}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3812fa4344feaa419117ea9b06cdb3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioPeer: {fileID: 1765321678}
+  _rotationAmplitude: {x: 0, y: 10, z: 0}
+  _rotationSpeed: 10
+--- !u!114 &1807435374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807435372}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fb26cba75fb661438cb4b24138da275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _axis: 2
-  _initiatorType: 1
+  _initiatorType: 5
   _initiatorSize: 4
   _generator:
     serializedVersion: 2
@@ -630,13 +683,13 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _startGen:
-  - outwards: 1
+  - outwards: 0
     scale: 1
-  - outwards: 1
+  - outwards: 0
     scale: 1
   _useBezierCurves: 1
   _bezierVertexCount: 16
-  _sideLength: 8.6602545
+  _sideLength: 1.5307337
   _trailPrefab: {fileID: 6503843389223686232, guid: a9d39844543f92a4f837e3d5390b1b35,
     type: 3}
   _trailWidthCurve:
@@ -695,5 +748,159 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   _audioPeer: {fileID: 1765321678}
-  _audioBands: 
-  _speedRange: {x: 0, y: 50}
+  _audioBands: 0000000001000000020000000300000004000000050000000600000007000000
+  _speedMinMax: {x: 0, y: 50}
+  _widthMinMax: {x: 0.1, y: 0.3}
+  _trailTimeMinMax: {x: 0, y: 0.5}
+  _colorMultiplier: 2
+--- !u!4 &1807435375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807435372}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &779692747351504385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747478106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb26cba75fb661438cb4b24138da275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _axis: 2
+  _initiatorType: 1
+  _initiatorSize: 5
+  _generator:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.3333
+      value: 0
+      inSlope: -0
+      outSlope: 1.4997001
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.25
+      inSlope: 1.4997001
+      outSlope: -1.5006003
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6666
+      value: 0
+      inSlope: -1.5006003
+      outSlope: 0
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0
+      outSlope: 0
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _startGen:
+  - outwards: 0
+    scale: 1
+  - outwards: 0
+    scale: 1
+  _useBezierCurves: 0
+  _bezierVertexCount: 8
+  _sideLength: 3.5355337
+  _trailPrefab: {fileID: 6503843389223686232, guid: a9d39844543f92a4f837e3d5390b1b35,
+    type: 3}
+  _trailWidthCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _trailEndCapVertices: 6
+  _trailMaterial: {fileID: 2100000, guid: 3081d5f45eaeb09418ca569481c92aeb, type: 2}
+  _trailColor:
+    serializedVersion: 2
+    key0: {r: 0, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 0, b: 0, a: 1}
+    key2: {r: 1, g: 1, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 65535
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  _audioPeer: {fileID: 1765321678}
+  _audioBands: 0000000001000000020000000300000004000000050000000600000007000000
+  _speedMinMax: {x: 0, y: 150}
+  _widthMinMax: {x: 0.1, y: 0.3}
+  _trailTimeMinMax: {x: 0, y: 1}
+  _colorMultiplier: 5

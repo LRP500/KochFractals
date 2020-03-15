@@ -42,15 +42,30 @@ namespace KochFractals
         private int[] _audioBands = null;
 
         [SerializeField]
-        private Vector2 _speedRange = default;
+        private Vector2 _speedMinMax = default;
+
+        [SerializeField]
+        private Vector2 _widthMinMax = default;
+
+        [SerializeField]
+        private Vector2 _trailTimeMinMax = default;
+
+        [SerializeField]
+        private float _colorMultiplier = 1f;
 
         private float _lerpSpeed = 0;
         private float _distanceSnap = 0;
+
+        private Color _startColor = default;
+        private Color _endColor = default;
 
         public List<Trail> Trails { get; private set; } = null;
 
         private void Start()
         {
+            _startColor = new Color(0, 0, 0, 0);
+            _endColor = new Color(0, 0, 0, 1);
+
             Trails = new List<Trail>();
 
             for (int i = 0, length = Initiator.edgeCount; i < length; i++)
@@ -103,20 +118,37 @@ namespace KochFractals
         private void Update()
         {
             ProcessMovement();
+            AudioBehaviour();
+        }
+
+        private void AudioBehaviour()
+        {
+            for (int i = 0, length = Initiator.edgeCount; i < length; i++)
+            {
+                /// Lerp trail color and emission
+                float sample = _audioPeer.AudioBandBuffers[_audioBands[i]];
+                Color colorLerp = Color.Lerp(_startColor, Trails[i].emission * _colorMultiplier, sample);
+                Trails[i].renderer.material.SetColor("_EmissionColor", colorLerp);
+                colorLerp = Color.Lerp(_startColor, _endColor, sample);
+                Trails[i].renderer.material.SetColor("_Color", colorLerp);
+
+                /// Lerp trail width multiplier
+                float widthLerp = Mathf.Lerp(_widthMinMax.x, _widthMinMax.y, sample);
+                Trails[i].renderer.widthMultiplier = widthLerp;
+
+                /// Lerp trail time
+                float timeLerp = Mathf.Lerp(_trailTimeMinMax.x, _trailTimeMinMax.y, sample);
+                Trails[i].renderer.time = timeLerp;
+            }
         }
 
         private void ProcessMovement()
         {
-            _lerpSpeed = Mathf.Lerp(_speedRange.x, _speedRange.y, _audioPeer.Amplitude);
+            _lerpSpeed = Mathf.Lerp(_speedMinMax.x, _speedMinMax.y, _audioPeer.Amplitude);
 
             for (int i = 0; i < Trails.Count; i++)
             {
                 Trail trail = Trails[i];
-
-                trail.gameObject.transform.localPosition = Vector3.MoveTowards(
-                    trail.gameObject.transform.position,
-                    trail.targetPosition,
-                    Time.deltaTime * _lerpSpeed);
 
                 _distanceSnap = Vector3.Distance(trail.gameObject.transform.localPosition, trail.targetPosition);
 
@@ -151,6 +183,9 @@ namespace KochFractals
                         trail.targetPosition = _targetPositions[trail.targetIndex];
                     }
                 }
+
+                trail.gameObject.transform.localPosition = Vector3.MoveTowards(
+                    trail.gameObject.transform.position, trail.targetPosition, Time.deltaTime * _lerpSpeed);
             }
         }
     }
